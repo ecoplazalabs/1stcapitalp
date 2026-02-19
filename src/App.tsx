@@ -16,7 +16,7 @@ import { PracticeAreas } from "@/components/sections/PracticeAreas";
 import { Contact } from "@/components/sections/Contact";
 
 const App = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   // Keep <html lang> in sync with the active language
   useEffect(() => {
@@ -27,10 +27,10 @@ const App = () => {
     <>
       {/* Skip to main content — accessibility */}
       <a
-        href="#hero"
+        href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-sm focus:bg-brand-red focus:px-4 focus:py-2 focus:font-body focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg"
       >
-        Skip to main content
+        {t("accessibility.skip")}
       </a>
 
       <Header />

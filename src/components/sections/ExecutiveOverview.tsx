@@ -79,6 +79,7 @@ export const ExecutiveOverview = () => {
     >
       <Container>
         <SectionHeading
+          id="overview-heading"
           title={t("overview.title")}
           subtitle={t("overview.subtitle")}
           alignment="left"
@@ -171,7 +172,7 @@ export const ExecutiveOverview = () => {
                     />
                     <div className="absolute left-4 top-1/2 -translate-y-1/2 whitespace-nowrap">
                       <p className="font-body text-[10px] font-semibold text-neutral-700">
-                        London
+                        {t("overview.london")}
                       </p>
                     </div>
                   </div>
@@ -201,7 +202,7 @@ export const ExecutiveOverview = () => {
                   <div className="h-2 w-2 rounded-full bg-neutral-400" />
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 whitespace-nowrap">
                     <p className="font-body text-[10px] font-semibold text-neutral-700">
-                      UAE
+                      {t("overview.uae")}
                     </p>
                   </div>
                 </motion.div>

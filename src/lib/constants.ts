@@ -1,4 +1,4 @@
-import type { NavItem, CounterItem } from "@/types";
+import type { NavItem } from "@/types";
 
 export const NAV_ITEMS: NavItem[] = [
   { label: "nav.about", href: "#about", id: "about" },
@@ -36,31 +36,4 @@ export const COMPANY = {
   GLOBAL_OFFICES: 3,
   PRACTICE_AREAS: 4,
   SECTORS: 4,
-} as const;
-
-export const COUNTERS: CounterItem[] = [
-  {
-    prefix: "$",
-    value: 150,
-    suffix: "M+",
-    label: "hero.counter.capital",
-  },
-  {
-    value: 3,
-    suffix: "",
-    label: "hero.counter.offices",
-  },
-  {
-    value: 4,
-    suffix: "",
-    label: "hero.counter.areas",
-  },
-];
-
-export const BREAKPOINTS = {
-  SM: 640,
-  MD: 768,
-  LG: 1024,
-  XL: 1280,
-  XXL: 1536,
 } as const;

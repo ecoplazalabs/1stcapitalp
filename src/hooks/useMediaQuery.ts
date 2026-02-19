@@ -1,36 +1,20 @@
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
 
 // Returns true if the given media query matches.
-// Uses matchMedia API with addEventListener for modern browsers.
-// SSR-safe: defaults to false until mounted.
+// Uses useSyncExternalStore for tear-free reads (React 18+).
+// SSR-safe: defaults to false via getServerSnapshot.
 export const useMediaQuery = (query: string): boolean => {
-  const [matches, setMatches] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia(query).matches;
-  });
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
+  const subscribe = (callback: () => void) => {
     const mediaQuery = window.matchMedia(query);
-    setMatches(mediaQuery.matches);
+    mediaQuery.addEventListener("change", callback);
+    return () => mediaQuery.removeEventListener("change", callback);
+  };
 
-    const handleChange = (event: MediaQueryListEvent) => {
-      setMatches(event.matches);
-    };
+  const getSnapshot = () => window.matchMedia(query).matches;
+  const getServerSnapshot = () => false;
 
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, [query]);
-
-  return matches;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 };
 
-// Convenience hooks for common breakpoints (mobile-first)
+// Convenience hook for common breakpoint (mobile-first)
 export const useIsMobile = (): boolean => useMediaQuery("(max-width: 767px)");
-export const useIsTablet = (): boolean =>
-  useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
-export const useIsDesktop = (): boolean => useMediaQuery("(min-width: 1024px)");
-export const useIsLargeDesktop = (): boolean => useMediaQuery("(min-width: 1280px)");
-export const usePrefersReducedMotion = (): boolean =>
-  useMediaQuery("(prefers-reduced-motion: reduce)");

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { X } from "lucide-react";
@@ -22,6 +23,26 @@ export const MobileMenu = ({
   activeSection,
 }: MobileMenuProps) => {
   const { t } = useTranslation();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close on Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
+  // Focus trap: focus the close button when menu opens
+  useEffect(() => {
+    if (!isOpen) return;
+    const firstFocusable = menuRef.current?.querySelector<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    firstFocusable?.focus();
+  }, [isOpen]);
 
   return (
     <AnimatePresence>
@@ -38,6 +59,7 @@ export const MobileMenu = ({
           />
 
           <motion.div
+            ref={menuRef}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}

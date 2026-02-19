@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { MapPin, Mail, Phone, Send, CheckCircle } from "lucide-react";
@@ -68,14 +68,20 @@ const ContactInfoItem = ({
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
+  name: string;
 }
 
-const Input = ({ label, className, ...props }: InputProps) => (
+const Input = ({ label, className, name, ...props }: InputProps) => (
   <div className="flex flex-col gap-1.5">
-    <label className="font-body text-xs font-medium uppercase tracking-[0.1em] text-neutral-400">
+    <label
+      htmlFor={`contact-${name}`}
+      className="font-body text-xs font-medium uppercase tracking-[0.1em] text-neutral-400"
+    >
       {label}
     </label>
     <input
+      id={`contact-${name}`}
+      name={name}
       className={cn(
         "h-11 w-full rounded-sm border border-white/10 bg-white/5 px-4",
         "font-body text-sm text-white placeholder:text-neutral-600",
@@ -93,6 +99,12 @@ export const Contact = () => {
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    if (!submitted) return;
+    const timer = setTimeout(() => setSubmitted(false), 5000);
+    return () => clearTimeout(timer);
+  }, [submitted]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -104,7 +116,6 @@ export const Contact = () => {
     e.preventDefault();
     setSubmitted(true);
     setForm(INITIAL_FORM);
-    setTimeout(() => setSubmitted(false), 5000);
   };
 
   const contactItems: ContactInfoItemProps[] = [
@@ -130,8 +141,7 @@ export const Contact = () => {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden py-24 md:py-32"
-      style={{ backgroundColor: "#111111" }}
+      className="relative overflow-hidden bg-neutral-950 py-24 md:py-32"
       aria-labelledby="contact-heading"
     >
       {/* Red gradient accent */}
@@ -149,6 +159,7 @@ export const Contact = () => {
 
       <Container className="relative z-10">
         <SectionHeading
+          id="contact-heading"
           title={t("contact.title")}
           subtitle={t("contact.subtitle")}
           light
@@ -226,7 +237,6 @@ export const Contact = () => {
                 <form
                   onSubmit={handleSubmit}
                   className="flex flex-col gap-6"
-                  noValidate
                 >
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <Input
@@ -262,10 +272,14 @@ export const Contact = () => {
                   />
 
                   <div className="flex flex-col gap-1.5">
-                    <label className="font-body text-xs font-medium uppercase tracking-[0.1em] text-neutral-400">
+                    <label
+                      htmlFor="contact-message"
+                      className="font-body text-xs font-medium uppercase tracking-[0.1em] text-neutral-400"
+                    >
                       {t("contact.form.message")}
                     </label>
                     <textarea
+                      id="contact-message"
                       name="message"
                       value={form.message}
                       onChange={handleChange}

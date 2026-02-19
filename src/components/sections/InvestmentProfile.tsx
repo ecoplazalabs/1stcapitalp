@@ -82,12 +82,12 @@ export const InvestmentProfile = () => {
   return (
     <section
       id="strategy"
-      className="py-24 md:py-32"
-      style={{ backgroundColor: "#F5F5F5" }}
+      className="bg-neutral-100 py-24 md:py-32"
       aria-labelledby="strategy-heading"
     >
       <Container>
         <SectionHeading
+          id="strategy-heading"
           title={t("strategy.title")}
           subtitle={t("strategy.subtitle")}
         />

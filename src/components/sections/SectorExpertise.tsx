@@ -82,12 +82,12 @@ export const SectorExpertise = () => {
   return (
     <section
       id="sectors"
-      className="py-24 md:py-32"
-      style={{ backgroundColor: "#0a0a0a" }}
+      className="bg-[#0a0a0a] py-24 md:py-32"
       aria-labelledby="sectors-heading"
     >
       <Container>
         <SectionHeading
+          id="sectors-heading"
           title={t("sectors.title")}
           subtitle={t("sectors.subtitle")}
           light

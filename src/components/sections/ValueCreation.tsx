@@ -76,6 +76,7 @@ export const ValueCreation = () => {
     >
       <Container>
         <SectionHeading
+          id="value-heading"
           title={t("value.title")}
           subtitle={t("value.subtitle")}
         />

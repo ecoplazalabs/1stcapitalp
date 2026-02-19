@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useMotionValue, useTransform, animate, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -24,9 +24,12 @@ export const Counter = ({
   const rounded = useTransform(count, (latest) => Math.round(latest));
   const isInView = useInView(containerRef, { once: true });
 
-  if (isInView) {
-    void animate(count, value, { duration: 2.2, ease: "easeOut" });
-  }
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(count, value, { duration: 2.2, ease: "easeOut" });
+      return controls.stop;
+    }
+  }, [isInView, count, value]);
 
   return (
     <div

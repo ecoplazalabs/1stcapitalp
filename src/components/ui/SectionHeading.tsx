@@ -4,6 +4,7 @@ import { Divider } from "./Divider";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
+  id?: string;
   title: string;
   subtitle?: string;
   alignment?: "left" | "center";
@@ -12,6 +13,7 @@ interface SectionHeadingProps {
 }
 
 export const SectionHeading = ({
+  id,
   title,
   subtitle,
   alignment = "center",
@@ -59,6 +61,7 @@ export const SectionHeading = ({
           />
         )}
         <h2
+          id={id}
           className={cn(
             "font-heading text-3xl font-semibold leading-tight md:text-4xl lg:text-5xl",
             light ? "text-white" : "text-neutral-950",

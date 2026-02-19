@@ -82,12 +82,12 @@ export const PracticeAreas = () => {
   return (
     <section
       id="services"
-      className="py-24 md:py-32"
-      style={{ backgroundColor: "#F5F5F5" }}
+      className="bg-neutral-100 py-24 md:py-32"
       aria-labelledby="services-heading"
     >
       <Container>
         <SectionHeading
+          id="services-heading"
           title={t("services.title")}
           subtitle={t("services.subtitle")}
         />
