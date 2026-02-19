@@ -1,0 +1,23 @@
+---
+paths:
+  - "src/components/**"
+  - "src/sections/**"
+  - "src/hooks/**"
+  - "src/**/*.tsx"
+  - "src/**/*.jsx"
+---
+
+- Framework: React 19 + TypeScript 5.7 + Vite 6.1
+- Styling: Tailwind CSS v4 (clases utilitarias, no CSS inline excepto valores dinamicos)
+- Animaciones: Framer Motion 12.4 - usar variants de lib/animations.ts
+- i18n: Todo texto visible via useTranslation() - CERO strings hardcodeados
+- Componentes funcionales con hooks (no clases)
+- Props tipadas con TypeScript interfaces en types/index.ts
+- Responsive mobile-first: diseñar para 320px primero, escalar hacia arriba
+- Accesibilidad: semantic HTML, ARIA labels, alt text, focus states
+- Iconos: Lucide React - estilo line, 24px consistente
+- Fuentes: Cormorant Garamond (headings), Inter (body) via Fontsource
+- Colores: usar variables Tailwind del theme (brand-red, neutral-950, etc.)
+- Cada seccion tiene un id unico para smooth scroll navigation
+- Lazy load para imagenes below the fold
+- prefers-reduced-motion: respetar siempre en animaciones

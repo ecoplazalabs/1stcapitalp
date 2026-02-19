@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:eptokens.com)",
+      "WebFetch(domain:acobsouth.com)",
+      "WebFetch(domain:main.d1b1xbysf1ty28.amplifyapp.com)",
+      "Bash(dir:*)",
+      "Bash(npm create:*)",
+      "Bash(npx:*)",
+      "Bash(npm install:*)",
+      "Bash(/c/Projects/1stcapitalp/src/hooks/useCounter.ts:*)",
+      "Bash(/c/Projects/1stcapitalp/src/hooks/useScrollAnimation.ts:*)",
+      "Bash(/c/Projects/1stcapitalp/src/hooks/useActiveSection.ts:*)",
+      "Bash(/c/Projects/1stcapitalp/src/hooks/useMediaQuery.ts:*)",
+      "Bash(/c/Projects/1stcapitalp/src/main.tsx:*)",
+      "Bash(ls:*)",
+      "Bash(npm run build:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_console_messages",
+      "Bash(/c/Projects/1stcapitalp/amplify.yml:*)",
+      "Bash(echo:*)",
+      "Bash(node -e:*)",
+      "Bash(pkill:*)",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_run_code",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_wait_for",
+      "Bash(curl:*)",
+      "mcp__playwright__browser_press_key",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}

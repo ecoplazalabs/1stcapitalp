@@ -1,0 +1,10 @@
+{
+  "name": "1st Capital Partners",
+  "short_name": "1st Capital",
+  "description": "Boutique Merchant Finance - London",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#CC0000",
+  "icons": []
+}
