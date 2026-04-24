@@ -7,7 +7,7 @@ import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { Container } from "@/components/ui/Container";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { getPosts } from "@/lib/posts";
-import { fadeInUp, staggerContainer, VIEWPORT_CONFIG } from "@/lib/animations";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 import type { PostLang } from "@/types/blog";
 
 export const BlogListPage = () => {
@@ -68,9 +68,9 @@ export const BlogListPage = () => {
             </p>
           ) : (
             <motion.div
+              key={lang}
               initial="hidden"
-              whileInView="visible"
-              viewport={VIEWPORT_CONFIG}
+              animate="visible"
               variants={staggerContainer}
               className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-16 lg:grid-cols-3"
             >
