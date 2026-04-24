@@ -97,10 +97,22 @@ const main = async () => {
 
   const nowIso = new Date().toISOString();
 
+  const ensureSourceLink = (
+    body: string,
+    lang: "en" | "es"
+  ): string => {
+    if (body.includes(chosen!.link)) return body;
+    const label =
+      lang === "en" ? "Read the full article" : "Leer el artículo completo";
+    log(`  ↪ ${lang}: source link missing, appending footer automatically`);
+    return `${body.trim()}\n\n[${label} →](${chosen!.link})\n`;
+  };
+
   const write = async (lang: "en" | "es") => {
     log(`Generating ${lang.toUpperCase()} post with Claude…`);
     const out = await generateWithClaude(lang, chosen!, topic, config);
     const slug = safeSlug(out.slug) || safeSlug(out.title);
+    out.body = ensureSourceLink(out.body, lang);
 
     const validation = validatePost(out.body, chosen!, config);
     for (const w of validation.warnings) log(`  ⚠ ${lang}: ${w}`);
