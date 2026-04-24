@@ -143,7 +143,9 @@ const main = async () => {
   log("Done.");
 };
 
-main().catch((err) => {
-  console.error("[blog-gen] fatal:", err instanceof Error ? err.message : err);
-  process.exit(1);
-});
+main()
+  .then(() => process.exit(0))
+  .catch((err) => {
+    console.error("[blog-gen] fatal:", err instanceof Error ? err.message : err);
+    process.exit(1);
+  });
