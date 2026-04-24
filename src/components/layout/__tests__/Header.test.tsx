@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import { renderWithRouter as render } from "@/test/router-wrapper";
 import { Header } from "../Header";
 
 vi.mock("react-i18next", () => ({

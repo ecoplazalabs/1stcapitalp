@@ -12,6 +12,19 @@ dist
 dist-ssr
 *.local
 
+# Deploy artefacts
+dist-deploy.zip
+
+# Local screenshots / Playwright transcripts
+.playwright-mcp/
+1stcapitalp-live.png
+amplify-deployed.png
+cpanel-filemanager.png
+desktop-hero-post-fix.png
+
+# Local Claude settings
+.claude/settings.local.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

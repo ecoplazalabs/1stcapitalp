@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { X } from "lucide-react";
 import { LogoFull } from "@/assets/logo/LogoFull";
 import { Button } from "@/components/ui/Button";
@@ -13,6 +14,7 @@ interface MobileMenuProps {
   onNavClick: (id: string) => void;
   onCtaClick: () => void;
   activeSection: string;
+  isBlog?: boolean;
 }
 
 export const MobileMenu = ({
@@ -21,6 +23,7 @@ export const MobileMenu = ({
   onNavClick,
   onCtaClick,
   activeSection,
+  isBlog = false,
 }: MobileMenuProps) => {
   const { t } = useTranslation();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -103,6 +106,29 @@ export const MobileMenu = ({
                   {t(item.label)}
                 </motion.button>
               ))}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  delay: NAV_ITEMS.length * 0.05 + 0.1,
+                  duration: 0.3,
+                }}
+              >
+                <Link
+                  to="/blog"
+                  onClick={onClose}
+                  className={cn(
+                    "block w-full rounded-sm px-4 py-3 text-left font-body text-sm font-medium uppercase tracking-[0.12em]",
+                    "transition-colors duration-150",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red",
+                    isBlog
+                      ? "text-brand-red bg-brand-red/5"
+                      : "text-neutral-300 hover:text-white hover:bg-white/5"
+                  )}
+                >
+                  {t("nav.blog")}
+                </Link>
+              </motion.div>
             </nav>
 
             <div className="border-t border-white/10 px-6 py-6">

@@ -1,0 +1,74 @@
+{
+  "$schema": "./topics.schema.json",
+  "description": "Configurable blog topics. Edit `enabled` and `weights` to control what the daily generator picks. Keywords feed the RSS/keyword filter.",
+  "topics": [
+    {
+      "id": "macro",
+      "label": { "en": "Global Macro", "es": "Macro Global" },
+      "keywords": ["Fed", "FOMC", "ECB", "BoE", "inflation", "CPI", "GDP", "recession", "rate cut", "rate hike", "monetary policy"],
+      "enabled": true
+    },
+    {
+      "id": "rates",
+      "label": { "en": "Rates & Fixed Income", "es": "Tasas y Renta Fija" },
+      "keywords": ["yield", "treasury", "bond", "credit spread", "sovereign", "gilts", "bund"],
+      "enabled": true
+    },
+    {
+      "id": "ma",
+      "label": { "en": "M&A Activity", "es": "Actividad M&A" },
+      "keywords": ["merger", "acquisition", "LBO", "buyout", "private equity", "takeover", "deal"],
+      "enabled": true
+    },
+    {
+      "id": "emerging",
+      "label": { "en": "Emerging Markets", "es": "Mercados Emergentes" },
+      "keywords": ["emerging", "LATAM", "MENA", "Asia", "frontier", "Brazil", "India", "Mexico", "UAE", "Saudi"],
+      "enabled": true
+    },
+    {
+      "id": "privatecredit",
+      "label": { "en": "Private Credit", "es": "Crédito Privado" },
+      "keywords": ["mezzanine", "direct lending", "private credit", "BDC", "middle market", "leveraged loan"],
+      "enabled": true
+    },
+    {
+      "id": "commodities",
+      "label": { "en": "Commodities", "es": "Commodities" },
+      "keywords": ["oil", "brent", "WTI", "gold", "copper", "natural gas", "OPEC"],
+      "enabled": false
+    },
+    {
+      "id": "crypto",
+      "label": { "en": "Digital Assets", "es": "Activos Digitales" },
+      "keywords": ["bitcoin", "ethereum", "stablecoin", "tokenization", "crypto regulation"],
+      "enabled": false
+    }
+  ],
+  "weights": {
+    "macro": 3,
+    "ma": 2,
+    "rates": 2,
+    "privatecredit": 2,
+    "emerging": 1
+  },
+  "sources": [
+    { "name": "Reuters Business", "url": "https://news.google.com/rss/search?q=when:24h+allinurl:reuters.com/business&hl=en-US&gl=US&ceid=US:en", "tier": "primary" },
+    { "name": "BBC Business", "url": "https://feeds.bbci.co.uk/news/business/rss.xml", "tier": "primary" },
+    { "name": "Financial Times", "url": "https://www.ft.com/?format=rss", "tier": "primary" },
+    { "name": "The Economist", "url": "https://www.economist.com/finance-and-economics/rss.xml", "tier": "primary" },
+    { "name": "CNBC World", "url": "https://www.cnbc.com/id/100727362/device/rss/rss.html", "tier": "primary" },
+    { "name": "MarketWatch", "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories", "tier": "primary" },
+    { "name": "Al Jazeera Economy", "url": "https://www.aljazeera.com/xml/rss/all.xml", "tier": "primary" },
+    { "name": "Federal Reserve", "url": "https://www.federalreserve.gov/feeds/press_all.xml", "tier": "official" },
+    { "name": "European Central Bank", "url": "https://www.ecb.europa.eu/rss/press.html", "tier": "official" },
+    { "name": "Bank of England", "url": "https://www.bankofengland.co.uk/rss/publications", "tier": "official" },
+    { "name": "IMF", "url": "https://www.imf.org/en/News/rss", "tier": "official" }
+  ],
+  "compliance": {
+    "maxQuoteWords": 25,
+    "maxSummarySentences": 6,
+    "requireSourceLink": true,
+    "requireDisclaimer": true
+  }
+}

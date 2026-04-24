@@ -32,7 +32,7 @@ export const COMPANY = {
   ADDRESS_COUNTRY: "United Kingdom",
   WEBSITE: "https://1stcapitalp.com",
   LOCATIONS: ["London", "Luxembourg", "UAE"],
-  COMMITTED_CAPITAL: 150,
+  COMMITTED_CAPITAL: 1500,
   GLOBAL_OFFICES: 3,
   PRACTICE_AREAS: 4,
   SECTORS: 4,

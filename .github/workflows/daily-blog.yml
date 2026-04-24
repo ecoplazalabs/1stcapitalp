@@ -1,0 +1,76 @@
+name: Daily Blog Post
+
+on:
+  schedule:
+    # 08:00 and 14:00 UTC — London morning coffee + afternoon trading session
+    - cron: "0 8,14 * * *"
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "Override topic (id from content/topics.json). Leave empty for random weighted pick."
+        required: false
+        type: string
+      dry_run:
+        description: "Dry run — log output but do not write files."
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: daily-blog
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          args=""
+          if [ -n "${{ inputs.topic }}" ]; then
+            args="$args --topic=${{ inputs.topic }}"
+          fi
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            args="$args --dry-run"
+          fi
+          npm run blog:generate -- $args
+
+      - name: Check for new files
+        id: check_changes
+        run: |
+          if [ -z "$(git status --porcelain content/posts/)" ]; then
+            echo "No new posts generated; exiting cleanly."
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push
+        if: steps.check_changes.outputs.has_changes == 'true' && inputs.dry_run != 'true'
+        run: |
+          git config user.name "1stCP Blog Bot"
+          git config user.email "blog-bot@1stcapitalp.com"
+          git add content/posts/
+          DATE_UTC=$(date -u +"%Y-%m-%d %H:%M UTC")
+          git commit -m "feat(blog): auto-publish daily post ($DATE_UTC)"
+          git push

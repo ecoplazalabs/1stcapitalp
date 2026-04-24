@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LogoFull } from "@/assets/logo/LogoFull";
 import { Container } from "@/components/ui/Container";
 import { NAV_ITEMS, COMPANY } from "@/lib/constants";
@@ -6,6 +7,17 @@ import { scrollToSection } from "@/lib/utils";
 
 export const Footer = () => {
   const { t } = useTranslation();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const isLanding = pathname === "/";
+
+  const handleNav = (id: string) => {
+    if (isLanding) {
+      scrollToSection(id);
+    } else {
+      navigate(`/#${id}`);
+    }
+  };
 
   return (
     <footer
@@ -34,12 +46,18 @@ export const Footer = () => {
               {NAV_ITEMS.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleNav(item.id)}
                   className="w-fit font-body text-sm text-neutral-400 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red rounded-sm px-0.5"
                 >
                   {t(item.label)}
                 </button>
               ))}
+              <Link
+                to="/blog"
+                className="w-fit font-body text-sm text-neutral-400 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-red rounded-sm px-0.5"
+              >
+                {t("nav.blog")}
+              </Link>
             </nav>
           </div>
 

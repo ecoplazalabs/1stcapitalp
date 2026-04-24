@@ -69,7 +69,7 @@ Esta es la seccion MAS importante. Debe ser impactante, memorable, de clase mund
 - **Subtitulo:** Una linea que explique brevemente que hacemos: *"Strategic capital solutions for companies with $10M - $100M in revenue. London | Luxembourg | UAE"*
 - **CTA Button:** "Explore Our Approach" o "Learn More" que haga scroll suave a la siguiente seccion
 - **Numeros clave animados (counters):** Mostrar cifras que impacten:
-  - **$150M+** Committed Capital
+  - **$1500M+** Committed Capital
   - **3** Global Offices
   - **4** Practice Areas
   - Estos numeros deben animarse (contar desde 0) cuando entran en viewport
@@ -92,7 +92,7 @@ Esta es la seccion MAS importante. Debe ser impactante, memorable, de clase mund
   - **Revenue Target:** $10M - $100M annual revenue
   - **Profitability:** EBITDA $2M - $10M
   - **Financing Mix:** Mezzanine debt + minority/majority equity
-  - **Current Vehicle:** Private Investment Fund con $150M committed capital
+  - **Current Vehicle:** Private Investment Fund con $1500M committed capital
 - Esta seccion debe verse como un "investment fact sheet" elegante, no como un parrafo largo
 - Usar numeros grandes, bold, que llamen la atencion
 
@@ -199,7 +199,7 @@ Necesito que cuando alguien abra esta pagina, en los primeros 3 segundos piense:
 ## 8. SEO Basico
 
 - Meta titulo: "1st Capital Partners | Boutique Merchant Finance - London"
-- Meta descripcion: "Boutique Financial Holding Company empowering lower middle-market companies with innovative capital structuring. London | Luxembourg | UAE. $150M+ committed capital."
+- Meta descripcion: "Boutique Financial Holding Company empowering lower middle-market companies with innovative capital structuring. London | Luxembourg | UAE. $1500M+ committed capital."
 - Open Graph tags para compartir en LinkedIn (esto es critico para nuestra audiencia)
 - Schema markup de Organization
 - Etiquetas semanticas correctas (h1, h2, h3 jerarquicos)

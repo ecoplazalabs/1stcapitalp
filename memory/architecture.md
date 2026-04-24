@@ -756,7 +756,7 @@ customHeaders:
 
   <!-- Primary Meta -->
   <title>1st Capital Partners | Boutique Merchant Finance - London</title>
-  <meta name="description" content="Boutique Financial Holding Company empowering lower middle-market companies with innovative capital structuring. London | Luxembourg | UAE. $150M+ committed capital." />
+  <meta name="description" content="Boutique Financial Holding Company empowering lower middle-market companies with innovative capital structuring. London | Luxembourg | UAE. $1500M+ committed capital." />
 
   <!-- Open Graph (LinkedIn critical) -->
   <meta property="og:type" content="website" />

@@ -49,7 +49,7 @@
 
 ### TASK-008: Hero Section
 - **Asignado:** frontend-dev (sonnet)
-- **Descripcion:** Seccion full-viewport con fondo gradiente oscuro. Headline, subtitle, CTA animados con stagger. 3 counters animados ($150M+, 3 offices, 4 areas). Efecto "wow" en 3 segundos.
+- **Descripcion:** Seccion full-viewport con fondo gradiente oscuro. Headline, subtitle, CTA animados con stagger. 3 counters animados ($1500M+, 3 offices, 4 areas). Efecto "wow" en 3 segundos.
 - **Entregable:** Hero impactante, animado, responsive
 
 ### TASK-009: Executive Overview
@@ -59,7 +59,7 @@
 
 ### TASK-010: Investment Profile & Strategy
 - **Asignado:** frontend-dev (sonnet)
-- **Descripcion:** 4 tarjetas/stats: Revenue Target ($10M-$100M), EBITDA ($2M-$10M), Financing Mix (mezzanine + equity), Vehicle ($150M fund). Numeros grandes, bold, visualmente impactantes.
+- **Descripcion:** 4 tarjetas/stats: Revenue Target ($10M-$100M), EBITDA ($2M-$10M), Financing Mix (mezzanine + equity), Vehicle ($1500M fund). Numeros grandes, bold, visualmente impactantes.
 - **Entregable:** Fact-sheet visual elegante
 
 ### TASK-011: Sector Expertise
