@@ -108,10 +108,17 @@ const main = async () => {
     return `${body.trim()}\n\n[${label} →](${chosen!.link})\n`;
   };
 
-  const write = async (lang: "en" | "es") => {
+  const write = async (
+    lang: "en" | "es",
+    forcedSlug?: string
+  ): Promise<string> => {
     log(`Generating ${lang.toUpperCase()} post with Claude…`);
     const out = await generateWithClaude(lang, chosen!, topic, config);
-    const slug = safeSlug(out.slug) || safeSlug(out.title);
+    const slug =
+      forcedSlug ?? (safeSlug(out.slug) || safeSlug(out.title));
+    if (forcedSlug) {
+      log(`  ↪ ${lang}: using canonical slug "${forcedSlug}"`);
+    }
     out.body = ensureSourceLink(out.body, lang);
 
     const validation = validatePost(out.body, chosen!, config);
@@ -142,15 +149,16 @@ const main = async () => {
       console.log("----- BODY PREVIEW -----");
       console.log(post.body.slice(0, 600));
       console.log("-----\n");
-      return;
+      return slug;
     }
 
     const written = await writePost(post);
     log(`  ✓ wrote ${written}`);
+    return slug;
   };
 
-  await write("en");
-  await write("es");
+  const canonicalSlug = await write("en");
+  await write("es", canonicalSlug);
 
   log("Done.");
 };

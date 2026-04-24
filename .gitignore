@@ -15,12 +15,17 @@ dist-ssr
 # Deploy artefacts
 dist-deploy.zip
 
-# Local screenshots / Playwright transcripts
+# Local screenshots / Playwright transcripts (anything at repo root)
 .playwright-mcp/
-1stcapitalp-live.png
-amplify-deployed.png
-cpanel-filemanager.png
-desktop-hero-post-fix.png
+/*.png
+/*.jpg
+/*.jpeg
+/*-snapshot.md
+/secret-form*.md
+/after-create.md
+/deploy-dropdown.md
+/deploy-workflow.md
+!README.md
 
 # Local Claude settings
 .claude/settings.local.json
