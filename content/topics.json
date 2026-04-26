@@ -17,7 +17,7 @@
     {
       "id": "ma",
       "label": { "en": "M&A Activity", "es": "Actividad M&A" },
-      "keywords": ["merger", "acquisition", "LBO", "buyout", "private equity", "takeover", "deal"],
+      "keywords": ["merger", "acquisition", "LBO", "buyout", "private equity", "takeover", "leveraged buyout", "M&A deal"],
       "enabled": true
     },
     {
@@ -66,7 +66,7 @@
     { "name": "IMF", "url": "https://www.imf.org/en/News/rss", "tier": "official" }
   ],
   "compliance": {
-    "maxQuoteWords": 25,
+    "maxQuoteWords": 30,
     "maxSummarySentences": 6,
     "requireSourceLink": true,
     "requireDisclaimer": true

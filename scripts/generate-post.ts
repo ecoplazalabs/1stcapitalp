@@ -78,89 +78,109 @@ const main = async () => {
     process.exit(0);
   }
 
-  let chosen: FeedItem | undefined;
-  for (const candidate of ranked.slice(0, 8)) {
-    const slugCandidate = safeSlug(candidate.title);
-    if (!slugCandidate) continue;
-    // eslint-disable-next-line no-await-in-loop
-    const exists = await postExists(slugCandidate);
-    if (!exists) {
-      chosen = candidate;
-      break;
-    }
-  }
-  if (!chosen) {
-    log(`All top candidates already published. Exiting.`);
-    process.exit(0);
-  }
-  log(`Chosen article: "${chosen.title}" (${chosen.sourceName})`);
-
   const nowIso = new Date().toISOString();
 
   const ensureSourceLink = (
     body: string,
-    lang: "en" | "es"
+    lang: "en" | "es",
+    chosen: FeedItem
   ): string => {
-    if (body.includes(chosen!.link)) return body;
+    if (body.includes(chosen.link)) return body;
     const label =
       lang === "en" ? "Read the full article" : "Leer el artículo completo";
     log(`  ↪ ${lang}: source link missing, appending footer automatically`);
-    return `${body.trim()}\n\n[${label} →](${chosen!.link})\n`;
+    return `${body.trim()}\n\n[${label} →](${chosen.link})\n`;
   };
 
-  const write = async (
+  const buildPost = async (
+    chosen: FeedItem,
     lang: "en" | "es",
     forcedSlug?: string
-  ): Promise<string> => {
+  ): Promise<GeneratedPost | null> => {
     log(`Generating ${lang.toUpperCase()} post with Claude…`);
-    const out = await generateWithClaude(lang, chosen!, topic, config);
+    const out = await generateWithClaude(lang, chosen, topic, config);
     const slug =
       forcedSlug ?? (safeSlug(out.slug) || safeSlug(out.title));
     if (forcedSlug) {
       log(`  ↪ ${lang}: using canonical slug "${forcedSlug}"`);
     }
-    out.body = ensureSourceLink(out.body, lang);
+    out.body = ensureSourceLink(out.body, lang, chosen);
 
-    const validation = validatePost(out.body, chosen!, config);
+    const validation = validatePost(out.body, chosen, config);
     for (const w of validation.warnings) log(`  ⚠ ${lang}: ${w}`);
     if (!validation.ok) {
       log(`  ✗ ${lang}: validation failed`);
       for (const e of validation.errors) log(`      ${e}`);
-      throw new Error(`Post failed compliance validation (${lang})`);
+      return null;
     }
 
-    const post: GeneratedPost = {
+    return {
       title: out.title.slice(0, 120),
       slug,
       excerpt: out.excerpt.slice(0, 240),
       body: out.body,
       topic: topic.id,
-      sourceUrl: chosen!.link,
-      sourceName: chosen!.sourceName,
+      sourceUrl: chosen.link,
+      sourceName: chosen.sourceName,
       date: nowIso,
       readingMinutes: out.readingMinutes,
       lang,
     };
-
-    if (DRY_RUN) {
-      log(`  (dry-run) would write ${lang}/${post.slug}.mdx`);
-      console.log("\n----- FRONTMATTER PREVIEW -----");
-      console.log(JSON.stringify(post, null, 2).slice(0, 1000));
-      console.log("----- BODY PREVIEW -----");
-      console.log(post.body.slice(0, 600));
-      console.log("-----\n");
-      return slug;
-    }
-
-    const written = await writePost(post);
-    log(`  ✓ wrote ${written}`);
-    return slug;
   };
 
-  const canonicalSlug = await write("en");
-  await write("es", canonicalSlug);
+  const MAX_ATTEMPTS = 3;
+  let attempts = 0;
+  for (const candidate of ranked) {
+    if (attempts >= MAX_ATTEMPTS) break;
+    const slugCandidate = safeSlug(candidate.title);
+    if (!slugCandidate) continue;
+    // eslint-disable-next-line no-await-in-loop
+    const exists = await postExists(slugCandidate);
+    if (exists) continue;
 
-  log("Done.");
+    attempts += 1;
+    log(
+      `Attempt ${attempts}/${MAX_ATTEMPTS}: "${candidate.title}" (${candidate.sourceName})`
+    );
+
+    // eslint-disable-next-line no-await-in-loop
+    const enPost = await buildPost(candidate, "en");
+    if (!enPost) {
+      log(`  ⤳ EN failed validation, trying next candidate.`);
+      continue;
+    }
+
+    // eslint-disable-next-line no-await-in-loop
+    const esPost = await buildPost(candidate, "es", enPost.slug);
+    if (!esPost) {
+      log(`  ⤳ ES failed validation, trying next candidate.`);
+      continue;
+    }
+
+    if (DRY_RUN) {
+      log(`  (dry-run) would write en/${enPost.slug}.mdx and es/${esPost.slug}.mdx`);
+      console.log("\n----- EN PREVIEW -----");
+      console.log(enPost.body.slice(0, 400));
+      console.log("\n----- ES PREVIEW -----");
+      console.log(esPost.body.slice(0, 400));
+      console.log("-----\n");
+      log("Done.");
+      return;
+    }
+
+    // eslint-disable-next-line no-await-in-loop
+    const enPath = await writePost(enPost);
+    log(`  ✓ wrote ${enPath}`);
+    // eslint-disable-next-line no-await-in-loop
+    const esPath = await writePost(esPost);
+    log(`  ✓ wrote ${esPath}`);
+    log("Done.");
+    return;
+  }
+
+  log(
+    `No candidate passed validation after ${attempts} attempt(s). Exiting cleanly without publishing.`
+  );
 };
 
 main()
