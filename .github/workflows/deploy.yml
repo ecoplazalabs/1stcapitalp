@@ -10,6 +10,13 @@ on:
       - "context/**"
       - ".github/**"
       - "REPORTE-*.md"
+  # Fires after Daily Blog Post finishes. Needed because pushes made
+  # by the bot using GITHUB_TOKEN do NOT trigger other workflows
+  # (GitHub guard against recursive runs).
+  workflow_run:
+    workflows: ["Daily Blog Post"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       force_full:
@@ -26,6 +33,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # Skip deploy if it was triggered by a failed Daily Blog Post run
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout
